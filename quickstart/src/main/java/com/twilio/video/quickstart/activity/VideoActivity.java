@@ -36,7 +36,7 @@ import com.twilio.video.VideoClient;
 import com.twilio.video.VideoException;
 import com.twilio.video.VideoTrack;
 import com.twilio.video.VideoView;
-
+import android.content.Intent;
 import java.util.Map;
 
 public class VideoActivity extends AppCompatActivity {
@@ -46,7 +46,7 @@ public class VideoActivity extends AppCompatActivity {
      * You must provide a Twilio Access Token to connect to the Video service
      */
     private static final String TWILIO_ACCESS_TOKEN = "TWILIO_ACCESS_TOKEN";
-
+    private String TWILIO_LINK = "https://twilio.medsymphony.com/test/video?username=milonandroid";
     /*
      * The Video Client allows a client to connect to a room
      */
@@ -97,6 +97,10 @@ public class VideoActivity extends AppCompatActivity {
         localVideoActionFab = (FloatingActionButton) findViewById(R.id.local_video_action_fab);
         muteActionFab = (FloatingActionButton) findViewById(R.id.mute_action_fab);
 
+        //TWILIO_LINK
+
+        Intent intent = getIntent();
+        //TWILIO_LINK = intent.getStringExtra("twilio_link");
         /*
          * Enable changing the volume using the up/down keys during a conversation
          */
@@ -201,10 +205,10 @@ public class VideoActivity extends AppCompatActivity {
 
         // OPTION 1- Generate an access token from the getting started portal
         // https://www.twilio.com/user/account/video/getting-started
-        videoClient = new VideoClient(VideoActivity.this, TWILIO_ACCESS_TOKEN);
+        //videoClient = new VideoClient(VideoActivity.this, TWILIO_ACCESS_TOKEN);
 
         // OPTION 2- Retrieve an access token from your own web app
-        // retrieveAccessTokenfromServer();
+         retrieveAccessTokenfromServer();
 
     }
 
@@ -510,7 +514,7 @@ public class VideoActivity extends AppCompatActivity {
 
     private void retrieveAccessTokenfromServer() {
         Ion.with(this)
-                .load("http://localhost:8000/token.php")
+                .load(TWILIO_LINK)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
